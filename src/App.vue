@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app"
+       type="textarea">
+    <LeftContent :code="final"
+                 class="left" />
+    <Doraemon :code="finalCode" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Doraemon from './components/Doraemon.vue'
+import LeftContent from './components/LeftContent.vue'
+import code from './assets/cssCode/code'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Doraemon,
+    LeftContent
+  },
+  data () {
+    return {
+      code: code,
+      final: '',
+    }
+  },
+  methods: {
+    codeAppear () {
+      let n = 0
+      setInterval(() => {
+        this.final = this.code.substring(0, n)
+        n += 1;
+      }, 0.0001)
+    }
+  },
+  created () {
+    this.codeAppear()
+  },
+  computed: {
+    finalCode () {
+      return '<style>' + this.final + '<style>'
+    }
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 500px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
